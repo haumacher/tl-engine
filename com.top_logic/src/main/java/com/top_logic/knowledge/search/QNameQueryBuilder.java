@@ -82,11 +82,21 @@ public class QNameQueryBuilder extends PolymorphicQueryBuilder<QNameQueryBuilder
 		Map<String, List<String>> typeValueMapping = getConfig().getTypeValueMapping();
 		HashSet<String> matchingValues = new HashSet<>();
 		for (TLClass type : types) {
-			String typeName = TLModelUtil.qualifiedName(type);
-			List<String> typeDBValues = typeValueMapping.get(typeName);
-			if (typeDBValues == null) {
-				throw new IllegalArgumentException(
-					"No database value configured for type " + typeName + " in table " + table);
+			List<String> typeDBValues;
+			TLClass probe = type;
+			while (true) {
+				String typeName = TLModelUtil.qualifiedName(probe);
+				typeDBValues = typeValueMapping.get(typeName);
+				if (typeDBValues == null) {
+					probe = TLModelUtil.getPrimaryGeneralization(probe);
+					if (probe == null) {
+						throw new IllegalArgumentException(
+							"No type identifier configured for type '" + TLModelUtil.qualifiedName(type)
+								+ "' in table '" + table + "'.");
+					}
+					continue;
+				}
+				break;
 			}
 			matchingValues.addAll(typeDBValues);
 		}

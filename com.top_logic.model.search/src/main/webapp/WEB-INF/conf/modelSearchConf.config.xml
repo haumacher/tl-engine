@@ -343,6 +343,8 @@
 					<method name="messageFormat" class="com.top_logic.model.search.expr.MessageFormatExpr$Builder"/>
 					<method name="format" class="com.top_logic.model.search.expr.FormatExpr$Builder"/>
 					<method name="parse" class="com.top_logic.model.search.expr.ParseExpr$Builder"/>
+					<method name="split" class="com.top_logic.model.search.expr.config.operations.string.Split$Builder"/>
+					<method name="join" class="com.top_logic.model.search.expr.config.operations.string.Join$Builder"/>
 					<method name="label" class="com.top_logic.model.search.expr.config.operations.Label$Builder"/>
 					
 					<method name="translate" class="com.top_logic.model.search.expr.config.operations.string.Translate$Builder"/>
@@ -353,6 +355,7 @@
 					<method name="zipArchive" class="com.top_logic.model.search.expr.config.operations.binary.ZipArchive$Builder"/>
 					<method name="zipEntry" class="com.top_logic.model.search.expr.config.operations.binary.ZipEntry$Builder"/>
 					<method name="pdf2txt" class="com.top_logic.model.search.expr.config.operations.binary.Pdf2Txt$Builder"/>
+					<method name="parseCSV" class="com.top_logic.model.search.expr.config.operations.binary.ParseCSV$Builder"/>
 					<method name="parseJson" class="com.top_logic.model.search.expr.config.operations.binary.ParseJson$Builder"/>
 					
 					<method name="regex" class="com.top_logic.model.search.expr.config.operations.regex.Regex$Builder"/>
@@ -395,7 +398,7 @@
 					<method name="isCompatible" class="com.top_logic.model.search.expr.config.operations.IsCompatible$Builder"/>
 					<method name="singleElement" class="com.top_logic.model.search.expr.config.operations.SingleElementBuilder"/>
 					<method name="singleton" class="com.top_logic.model.search.expr.config.operations.SingletonBuilder"/>
-					<method name="fill" class="com.top_logic.model.search.expr.config.operations.ResKeyArgumentsBuilder"/>
+					<method name="fill" class="com.top_logic.model.search.expr.Fill$Builder"/>
 					<method name="associationNavigation" class="com.top_logic.model.search.expr.config.operations.AssociationNavigationBuilder"/>
 					<method name="all" class="com.top_logic.model.search.expr.config.operations.AllBuilder"/>
 					<method name="none" class="com.top_logic.model.search.expr.config.operations.EmptySetBuilder"/>
@@ -692,6 +695,12 @@
 		
 		<config config:interface="com.top_logic.layout.form.values.edit.EditorFactory$Config">
 			<customizations>
+				<property name="com.top_logic.element.config.annotation.TLStorage#implementation">
+					<annotations>
+						<implementation-class-default value="com.top_logic.model.search.providers.AttributeByExpression"/>
+					</annotations>
+				</property>
+
 				<type name="com.top_logic.layout.ScriptFunction0">
 					<annotations>
 						<property-editor value="com.top_logic.model.search.form.ScriptFunction0Impl$Editor"/>

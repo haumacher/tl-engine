@@ -19,6 +19,7 @@ import com.top_logic.dob.meta.MOClass;
 import com.top_logic.dob.meta.MOClassImpl;
 import com.top_logic.dob.meta.MOStructure;
 import com.top_logic.knowledge.service.Revision;
+import com.top_logic.knowledge.service.db2.PersistentObject;
 import com.top_logic.model.ModelKind;
 import com.top_logic.model.TLAssociationEnd;
 import com.top_logic.model.TLObject;
@@ -41,18 +42,31 @@ public class TransientTLObjectImpl extends TransientObject {
 
 	private Map<TLStructuredTypePart, Object> _values = new HashMap<>();
 
+	private TLObject _context;
+
 	/**
 	 * Creates a {@link TransientTLObjectImpl}.
 	 * 
+	 * @param type
+	 *        The type of this object.
+	 * @param context
+	 *        The container of this object, see {@link #tContainer()}.
+	 * 
 	 * @see TransientObjectFactory
 	 */
-	TransientTLObjectImpl(TLStructuredType type) {
+	TransientTLObjectImpl(TLStructuredType type, TLObject context) {
 		_type = type;
+		_context = context;
 	}
 
 	@Override
 	public TLStructuredType tType() {
 		return _type;
+	}
+
+	@Override
+	public TLObject tContainer() {
+		return _context;
 	}
 
 	@Override
@@ -73,9 +87,13 @@ public class TransientTLObjectImpl extends TransientObject {
 
 	private Object directValue(TLStructuredTypePart part) {
 		if (part.isDerived() && (part.getModelKind() != ModelKind.REFERENCE || !((TLReference) part).isBackwards())) {
-			return part.getStorageImplementation().getAttributeValue(this, part);
+			if (part.getName().equals(PersistentObject.T_TYPE_ATTR)) {
+				return tType();
+			} else {
+				return part.getStorageImplementation().getAttributeValue(this, part);
+			}
 		}
-		return _values.get(part);
+		return _values.get(part.getDefinition());
 	}
 
 	@Override
@@ -216,7 +234,7 @@ public class TransientTLObjectImpl extends TransientObject {
 	}
 
 	private Object directUpdate(TLStructuredTypePart part, Object newValue) {
-		return _values.put(part, newValue);
+		return _values.put(part.getDefinition(), newValue);
 	}
 
 	private void directAdd(TLReference ref, TransientTLObjectImpl other) {

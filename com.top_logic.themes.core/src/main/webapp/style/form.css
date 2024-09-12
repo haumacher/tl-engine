@@ -4,7 +4,8 @@
 ****					****
 */
 .frmBody h1 {
-	font-family: var(--font-family-bold);
+	font-family: var(--font-family);
+	font-weight: bold;
 	font-size: var(--heading-04-font-size);
 	line-height: var(--heading-04-line-height);
 	letter-spacing: var(--heading-04-letter-spacing);
@@ -12,7 +13,8 @@
 
 .rf_header,
 .dfEntryTitle {
-    font-family: var(--font-family-bold);
+	font-family: var(--font-family);
+	font-weight: bold;
     font-size: var(--heading-compact-02-font-size);
     line-height: var(--heading-compact-02-line-height);
     letter-spacing: var(--heading-compact-02-letter-spacing);
@@ -98,16 +100,30 @@ div.fptTitle {
     background-color: transparent;
 }
 
-div.fptTitleContent, div.fptSubtitleContent {
+div.fptTitleContent, 
+div.fptSubtitleContent {
     position: absolute;
-    overflow: hidden;
     left: 0px;
-    right: 110px;
+    right: 50px;
     top: 0px;
     bottom: 0px;
     white-space: nowrap;
-    text-overflow: ellipsis;
     color: var(--text-primary);
+}
+
+.fptTitleContent > *,
+.fptSubtitleContent > *,
+.fptTitleText {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.fptTitleText {
+	width: 100%;
+}
+
+.fptHeader span.can-edit {
+	width: initial;
 }
 
 div.fptTitleContent {
@@ -116,12 +132,17 @@ div.fptTitleContent {
 	padding: 0 var(--spacing-03);
 }
 
-div.fptTitleContent .tlTranslatedI18nField, div.fptTitleContent .cTextInput {
+div.fptTitleContent .tlTranslatedI18nField, 
+div.fptTitleContent .cTextInput {
 	width: calc(100% - var(--heading-04-font-size) - 6px);
 }
 
-div.fptTitleContent, div.fptTitle input.is-input, div.fptTitle select.is-input {
-	font-family: var(--font-family-bold);
+div.fptTitleContent, 
+div.fptTitleContent .cTextInput,
+div.fptTitle input.is-input, 
+div.fptTitle select.is-input {
+	font-family: var(--font-family);
+	font-weight: var(--highlight-weight, bold);
 	font-size: var(--heading-04-font-size);
 	line-height: var(--heading-04-line-height);
 	letter-spacing: var(--heading-04-letter-spacing);
@@ -137,42 +158,41 @@ div.fptSubtitle {
 }
 
 div.fptSubtitleContent {
-    display: inline-block;
+	display: flex;
+    align-items: center;
     width: 100%;
     box-sizing: border-box;
     padding: 0 var(--spacing-03);
     font-size: var(--heading-03-font-size);
-    font-weight: 600;
+    font-weight: bold;
 }
 
-.fptIcon, .fptIconWithOverlay, .fptIconOverlay {
+div.fptIconBar > span,
+.fptIcon, 
+.fptIconWithOverlay {
     position: absolute;
     top: 10px;
     right: 20px;
 }
 
-div.fptIconBar > span.fptIcon, div.fptIconBar > span.fptIconWithOverlay {
+div.fptIconBar > span.fptIcon, 
+div.fptIconBar > span.fptIconWithOverlay,
+div.fptIconBar > span {
     font-size: 32px;
+}
+
+div.fptIconBar > span.fptIconOverlay {
+    font-size: 16px !important;
 }
 
 .fptIconOverlay {
     position: absolute;
-    top: 5px;
-    right: 5px;
-    height: 48px;
-}
-
-.fptIconOverlay i {
-    position: absolute;
-    top: 0px;
-    right: 5px;
+	top: 0px !important;
+    right: 5px !important;
     border-radius: 30px;
-    font-size: 30px;
+    color: var(--icon-primary);
+    background: var(--layer);
     padding: 4px;
-}
-
-div.fptIconBar > span.fptIconOverlay > i {
-    color: black;
 }
 
 .rf_header .cLabel {
@@ -797,7 +817,8 @@ div.dfListAdd {
     display: flex;
     align-items: center;
     gap: var(--spacing-02);
-    background: var(--layer-accent);
+    color: var(--highlight-fg, inherit);
+    background: var(--highlight-bg, var(--layer-accent));
     padding: var(--spacing-02) var(--spacing-03);
     white-space: nowrap;
     height: 2.5rem;
@@ -806,7 +827,7 @@ div.dfListAdd {
 }
 
 .rf_groupCell .rf_header:hover {
-	background: var(--layer-accent-hover);
+	background: var(--highlight-bg--hover, var(--layer-accent-hover));
 }
 
 .rf_groupCell .rf_header a:hover {
@@ -819,7 +840,7 @@ div.dfListAdd {
 
 .rf_groupCell .rf_header select.tl-select,
 .rf_groupCell .rf_header label {
-	font-weight: 600;
+	font-weight: bold;
 	margin-bottom: 0px;
 	text-overflow: ellipsis;
 	overflow: hidden;
@@ -929,7 +950,7 @@ div.dfListAdd {
 	white-space: nowrap;
 	text-overflow: ellipsis;
     overflow: hidden;
-    font-family: var(--font-family-regular);
+    font-family: var(--font-family);
     font-size: var(--body-02-font-size);
     line-height: var(--body-02-line-height);
     letter-spacing: var(--body-02-letter-spacing);
@@ -1280,7 +1301,8 @@ div.cal_view {
 
 .cal_view_switch_header {
 	white-space: nowrap;
-	font-family: var(--font-family-bold);
+	font-family: var(--font-family);
+	font-weight: bold;
 	font-size: var(--heading-compact-01-font-size);
 	line-height: var(--heading-compact-01-line-height);
 	letter-spacing: var(--heading-compact-01-letter-spacing);
@@ -1311,7 +1333,7 @@ table.cal_table {
 th.cal_th {
 	border-style: none;
 	padding: var(--spacing-01) 0;
-	font-family: var(--font-family-regular);
+	font-family: var(--font-family);
     font-size: var(--body-01-font-size);
     line-height: var(--body-01-line-height);
     letter-spacing: var(--body-01-letter-spacing);
@@ -1325,26 +1347,27 @@ td.cal_cell {
 	padding: 0;
 	height: 2rem;
     width: 2rem;
-    font-family: var(--font-family-regular);
+    font-family: var(--font-family);
     font-size: var(--body-01-font-size);
     line-height: var(--body-01-line-height);
     letter-spacing: var(--body-01-letter-spacing);
+    background-color: var(--highlight-bg, inherit);
 }
 
 td.cal_cell:hover {
-	background-color: var(--layer-hover);
-	color: var(--text-primary);
+	background-color: var(--highlight-bg--hover, var(--layer-hover));
+	color: var(--highlight-fg, var(--text-primary));
 }
 
 td.cal_cell a {
 	/* Without display block, tab navigation through `cal_range` tables does not work. */
 	display: block;
-	color: inherit;
+	color: var(--highlight-fg, inherit);
 
 }
 
 td.cal_cell a:hover {
-	color: var(--text-primary);
+	color: var(--highlight-fg, var(--text-primary));
 	text-decoration: none;
 }
 
@@ -1357,35 +1380,35 @@ td.cal_now {
 	border-color: var(--border-strong);
 	border-style: solid;
 	border-width: 1px;
-	color: var(--text-primary);
+	color: var(--highlight-fg, var(--text-primary));
 }
 
 /* Weekday */
 td.cal_wd {	
-	color: var(--text-primary);
+	color: var(--highlight-fg, var(--text-primary));
 }
 
 /* Selected day */
 td.cal_sel {
-	background-color: var(--background-brand);
-  	color: var(--text-on-color);
+	background-color: var(--highlight-bg--selected, var(--background-brand));
+  	color: var(--highlight-fg, var(--text-on-color));
 }
 
 /* Weekends */
 td.cal_we:not(.cal_sel) {
-	color: var(--text-placeholder);
+	color: var(--highlight-fg, var(--text-placeholder));
 }
 
 /* Number of Week */
 td.cal_wn, td.cal_wn:hover {
-	background-color: var(--layer-accent-active);
-	color: var(--text-on-color);
+	background-color: var(--highlight-bg--hover, var(--layer-accent-active));
+	color: var(--highlight-fg, var(--text-on-color));
 	cursor: default;
 }
 
 /* Days of past or next month */
 td.cal_om {
-	color: var(--text-placeholder);
+	color: var(--highlight-fg, var(--text-placeholder));
 }
 
 span.cal_range {
@@ -1520,8 +1543,8 @@ div.cal_zoom_inAnimation {
 	width: 100%;
 }
 
-.cPopupSelect .tl-separator {
-	margin-right: var(--spacing-02);
+.tl-separator {
+	padding-right: var(--spacing-02);
 }
 
 .cBlockTextInput .lFixedRight a:not(.lFlexible),
@@ -1532,7 +1555,7 @@ div.cal_zoom_inAnimation {
 td.tl-table__cell--selected .cDecoratedCell a.input-image,
 td.tl-table__cell--selected .cDecoratedCell a.input-image:hover,
 td.tl-table__cell--selected .cDecoratedCell a.input-image:focus {
-	color: var(--icon-secondary);
+	color: var(--highlight-fg, var(--icon-secondary));
 	outline: none !important;
 }
 
@@ -1603,6 +1626,29 @@ span.cIconSelect .input-image.cannot-edit i {
 	outline: none !important;
 }
 
+.cTextInput,
+.cDateInput,
+.cDatetime,
+.cTimeInput,
+.cPopupSelect,
+.cCheckList-counts,
+.cBooleanChoice,
+.ddwttImmutableItem {
+	color: var(--highlight, inherit);
+	font-weight: var(--highlight-weight, normal);
+}
+
+.tl-table__cell .cTextInput,
+.tl-table__cell .cDateInput,
+.tl-table__cell .cDatetime,
+.tl-table__cell .cTimeInput,
+.tl-table__cell .cPopupSelect,
+.tl-table__cell .cCheckList-counts,
+.tl-table__cell .cBooleanChoice,
+.tl-table__cell .ddwttImmutableItem {
+	color: var(--highlight-fg, inherit);
+}
+
 .cTextInput input,
 .cIntegerInput.num input,
 .cExpandableTextInput input,
@@ -1610,8 +1656,8 @@ span.cIconSelect .input-image.cannot-edit i {
 .cPopupSelect input,
 .cDateInput input,
 .cTimeInput input {
-	color: var(--text-primary);
-	background: var(--field);
+	color: var(--highlight-fg, var(--text-primary));
+	background: var(--highlight-bg, var(--field));
 	border: none;
 	padding: 0 var(--spacing-03);
 	height: 2rem;
@@ -1620,10 +1666,18 @@ span.cIconSelect .input-image.cannot-edit i {
 	white-space: break-spaces;
 	word-wrap: break-word;
 	word-break: break-word;
-	font-family: var(--font-family-regular);
+	font-family: var(--font-family);
     font-size: var(--body-02-font-size);
     line-height: var(--body-02-line-height);
     letter-spacing: var(--body-02-letter-spacing);
+}
+
+.cDateInput input {
+    width: 7rem;
+}
+
+.cTimeInput input {
+    width: 4.5rem;
 }
 
 .cTextInput.mandatory input,
@@ -1641,8 +1695,8 @@ span.cIconSelect .input-image.cannot-edit i {
 .cTextInput textarea,
 .cExpandableTextInput textarea, 
 .cBlockTextInput textarea {
-	color: var(--text-primary);
-	background: var(--field);
+	color: var(--highlight-fg, var(--text-primary));
+	background: var(--highlight-bg, var(--field));
 	border: none;
 	padding: var(--spacing-02) var(--spacing-03);
 	box-sizing: border-box;
@@ -2035,11 +2089,11 @@ span.bcc-option {
 	color: var(--text-disabled);
 }
 
-.cChoice-horizontal > .cChoice-option::after {
+.cChoice-horizontal.cannot-edit > .cChoice-option::after {
 	content: ";";
 }
 
-.cChoice-horizontal > .cChoice-option:last-child::after {
+.cChoice-horizontal.cannot-edit > .cChoice-option:last-child::after {
 	content: "";
 }
 
@@ -2085,12 +2139,13 @@ img.type-image {
 	align-self: center;
 }
 
-span.type-image {
-	margin-right: var(--spacing-01);
+a img.type-image {
+    vertical-align: middle;
 }
 
-.tl-table__cell .type-image {
-	margin-left: var(--spacing-02);
+span.type-image,
+a img.type-image {
+	padding-right: var(--spacing-01);
 }
 
 .cSelectOption,
@@ -2115,6 +2170,14 @@ span.type-image {
 	padding: 0;
 	border: 1px solid var(--border-strong);
 	border-radius: var(--corner-radius);
+}
+
+.ColorChooser.active {
+	cursor:pointer;
+}
+
+.ColorChooser.noColor {
+	background-image: url("../images/semi64x64lg.png");
 }
 
 span.cColorDisplay {
@@ -2551,13 +2614,11 @@ a.input-image.tristate.tBoolean {
 }
 
 .rf_header .ddwttDropBtn {
-	background-color: unset;
-	border: none;
-	height: 20px;
+	margin-left: var(--spacing-02);
 }
 
 .ddwttDropBtn {
-	font-family: var(--font-family-regular);
+	font-family: var(--font-family);
 	font-size: var(--body-02-font-size);
 	line-height: var(--body-02-line-height);
 	letter-spacing: var(--body-02-letter-spacing);
@@ -2567,8 +2628,8 @@ a.input-image.tristate.tBoolean {
 	border: none;
 	display: inline-flex;
 	align-items: center;
-	color: var(--text-primary);
-	background: var(--field);
+	color: var(--highlight-fg, var(--text-primary));
+	background: var(--highlight-bg, var(--field));
 	padding-left: var(--spacing-03);
 	padding-right: var(--spacing-02);
 	gap: var(--spacing-02);
@@ -2604,7 +2665,7 @@ span.disabled .ddwttDropBtn {
 }
 
 .ddwttDropBtn .ddwttChevron i {
-	color: var(--icon-on-color-disabled);
+	color: var(--highlight-fg, var(--icon-on-color-disabled));
 }
 
 .ddwttDropBtnActive .ddwttChevron i {
@@ -2642,7 +2703,7 @@ span.disabled .ddwttDropBtn {
 }
 
 .ddwttSearch {
-	font-family: var(--font-family-regular);
+	font-family: var(--font-family);
 	font-size: var(--body-02-font-size);
 	line-height: var(--body-02-line-height);
 	letter-spacing: var(--body-02-letter-spacing);

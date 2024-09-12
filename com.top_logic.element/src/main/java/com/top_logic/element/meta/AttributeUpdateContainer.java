@@ -5,8 +5,8 @@
  */
 package com.top_logic.element.meta;
 
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -29,6 +29,7 @@ import com.top_logic.mig.html.Media;
 import com.top_logic.model.TLObject;
 import com.top_logic.model.TLStructuredType;
 import com.top_logic.model.TLStructuredTypePart;
+import com.top_logic.model.factory.TLFactory;
 import com.top_logic.util.Resources;
 
 /**
@@ -62,8 +63,8 @@ public class AttributeUpdateContainer {
 	 */
 	public AttributeUpdateContainer(AttributeFormContext form) {
 		_form = form;
-		_edits = new HashMap<>();
-		_creates = new HashMap<>();
+		_edits = new LinkedHashMap<>();
+		_creates = new LinkedHashMap<>();
 	}
 
 	/**
@@ -254,7 +255,7 @@ public class AttributeUpdateContainer {
 	 */
 	public TLFormObject newObject(TLStructuredType type, TLObject container, ObjectConstructor constructor) {
 		while (true) {
-			String domain = newObjectID();
+			String domain = newCreateID();
 			if (_creates.get(domain) != null) {
 				continue;
 			}
@@ -286,6 +287,9 @@ public class AttributeUpdateContainer {
 		ObjectCreation newOverlay = new ObjectCreation(this, type, domain, constructor);
 		_creates.put(domain, newOverlay);
 		newOverlay.initContainer(container);
+
+		TLFactory.setupDefaultValues(container, newOverlay, type);
+
 		return newOverlay;
 	}
 
@@ -565,7 +569,10 @@ public class AttributeUpdateContainer {
 					if (_createIt.hasNext()) {
 						_next = _createIt.next();
 					} else if (_editIt.hasNext()) {
-						_next = _editIt.next();
+						ObjectEditing nextEdit = _editIt.next();
+						if (nextEdit.getEditedObject().tValid()) {
+							_next = nextEdit;
+						}
 					} else {
 						return false;
 					}

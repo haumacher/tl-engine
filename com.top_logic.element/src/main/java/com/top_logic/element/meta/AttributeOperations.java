@@ -79,6 +79,7 @@ import com.top_logic.model.ModelKind;
 import com.top_logic.model.TLClass;
 import com.top_logic.model.TLClassifier;
 import com.top_logic.model.TLEnumeration;
+import com.top_logic.model.TLFormObjectBase;
 import com.top_logic.model.TLModelPart;
 import com.top_logic.model.TLModule;
 import com.top_logic.model.TLObject;
@@ -175,12 +176,6 @@ public class AttributeOperations {
 		}
 
 		@Override
-		public Object getUpdateValue(AttributeUpdate update)
-				throws NoSuchAttributeException, IllegalArgumentException, AttributeException {
-			throw undefined(update);
-		}
-
-		@Override
 		public Collection<?> getLiveCollection(TLObject object, TLStructuredTypePart attribute) {
 			throw undefined(object, attribute);
 		}
@@ -198,6 +193,11 @@ public class AttributeOperations {
 		@Override
 		public void addAttributeValue(TLObject object, TLStructuredTypePart attribute, Object aValue)
 				throws NoSuchAttributeException, IllegalArgumentException, AttributeException {
+			throw undefined(object, attribute);
+		}
+
+		@Override
+		public Object getFormValue(TLFormObjectBase object, TLStructuredTypePart attribute) {
 			throw undefined(object, attribute);
 		}
 
@@ -239,17 +239,6 @@ public class AttributeOperations {
 		TLStructuredTypePart attribute = update.getAttribute();
 		checkAlive(object, attribute);
 		getStorageImplementation(object, attribute).checkUpdate(update);
-	}
-
-	/**
-	 * @see StorageImplementation#update(AttributeUpdate)
-	 */
-	public static Object getUpdateValue(AttributeUpdate update) throws NoSuchAttributeException, IllegalArgumentException,
-			AttributeException {
-		TLObject object = update.getObject();
-		TLStructuredTypePart attribute = update.getAttribute();
-		checkAlive(object, attribute);
-		return getStorageImplementation(object, attribute).getUpdateValue(update);
 	}
 
 	/**

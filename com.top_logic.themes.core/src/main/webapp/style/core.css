@@ -4,7 +4,7 @@
 }
 
 body {
-	font-family: var(--font-family-regular);
+	font-family: var(--font-family);
 	font-size: var(--body-02-font-size);
 	line-height: var(--body-02-line-height);
 	letter-spacing: var(--body-02-letter-spacing);
@@ -21,18 +21,6 @@ body {
 	width: var(--sb-size);
 	height: var(--sb-size);
 	background: transparent;
-}
-
-@property --sb-track-transition {
-	syntax: "<color>";
-	inherits: true;
-	initial-value: transparent;
-}
-
-@property --sb-thumb-transition {
-	syntax: "<color>";
-	inherits: true;
-	initial-value: transparent;
 }
 
 .lcAuto, .lcScroll, .tl-overflow--auto {
@@ -85,38 +73,43 @@ code {
 }
 
 h5 {
-	font-family: var(--font-family-bold);
+	font-family: var(--font-family);
 	font-size: var(--heading-compact-01-font-size);
 	line-height: var(--heading-compact-01-line-height);
 	letter-spacing: var(--heading-compact-01-letter-spacing);
+	font-weight: bold;
 }
 
 h4 {
-	font-family: var(--font-family-bold);
+	font-family: var(--font-family);
 	font-size: var(--heading-compact-02-font-size);
 	line-height: var(--heading-compact-02-line-height);
 	letter-spacing: var(--heading-compact-02-letter-spacing);
+	font-weight: bold;
 }
 
 h3 {
-	font-family: var(--font-family-bold);
+	font-family: var(--font-family);
 	font-size: var(--heading-03-font-size);
 	line-height: var(--heading-03-line-height);
 	letter-spacing: var(--heading-03-letter-spacing);
+	font-weight: bold;
 }
 
 h2 {
-	font-family: var(--font-family-bold);
+	font-family: var(--font-family);
 	font-size: var(--heading-04-font-size);
 	line-height: var(--heading-04-line-height);
 	letter-spacing: var(--heading-04-letter-spacing);
+	font-weight: bold;
 }
 
 h1 {
-	font-family: var(--font-family-bold);
+	font-family: var(--font-family);
 	font-size: var(--heading-05-font-size);
 	line-height: var(--heading-05-line-height);
 	letter-spacing: var(--heading-05-letter-spacing);
+	font-weight: bold;
 }
 
 /* Text highlight color */
@@ -150,10 +143,6 @@ i.yellow,
 	color: var(--support-warning);
 }
 
-a img.type-image {
-    vertical-align: middle;
-}
-
 /* Overlay styles are needed as long as the old icons with an overlay are not removed completely */
 i[class*=" overlay-"] span::before {
 	margin-left: -0.8em;
@@ -166,17 +155,77 @@ i[class*=" overlay-"] span::before {
 }
 
 .layoutVerticalAdjustmentGrabber {
-    cursor: n-resize;
+    cursor: ns-resize;
     background: var(--background);
 }
 
+.layoutVerticalAdjustmentGrabber:not(.fflCollapsed)::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 100%;
+    height: 2px;
+    background-color: var(--resize-bar);
+}
+
+.layoutVerticalAdjustmentGrabber:not(.fflCollapsed):hover::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 8px;
+    background-color: var(--resize-bar);
+    clip-path: polygon(0 0,
+    				20% 80%,
+    				80% 80%,
+    				100% 0%);
+}
+
 .layoutHorizontalAdjustmentGrabber {
-  	cursor: e-resize;
-  	background: var(--background);
+    cursor: ew-resize;
+    background: var(--background);
+}
+
+.layoutHorizontalAdjustmentGrabber:not(.fflCollapsed)::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 100%;
+    background-color: var(--resize-bar);
+}
+
+.layoutHorizontalAdjustmentGrabber:not(.fflCollapsed):hover::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 50px;
+    background-color: var(--resize-bar);
+    clip-path: polygon(0 0,
+    				80% 20%,
+    				80% 80%,
+    				0% 100%);
 }
 
 .fflCollapsed {
 	cursor: default;
+}
+
+.notificationTitle {
+    display: flex;
+    align-items: center;
+    color: var(--support-danger);
+	font-family: var(--font-family);
+	font-weight: bold;
 }
 
 /* The general footer of the application */
@@ -199,7 +248,11 @@ i[class*=" overlay-"] span::before {
 ****					****
 */
 a {
-	color: var(--link-primary);
+	color: var(--highlight, var(--link-primary));
+}
+
+.tl-table__cell a {
+	--highlight: var(--highlight-fg);
 }
 
 a, a:link {
@@ -208,17 +261,17 @@ a, a:link {
 }
 
 a:not(.disabled):hover {
-	color: var(--link-primary-hover);
+	color: var(--highlight, var(--link-primary-hover));
 	text-decoration: underline;
 }
 
 a:not(.disabled):active {
-	color: var(--text-primary);
+	color: var(--highlight, var(--text-primary));
 	text-decoration: underline;
 }
 
 a:not(.disabled):focus {
-    color: var(--link-primary-hover);
+    color: var(--highlight, var(--link-primary-hover));
 	outline: 1px solid var(--focus);
 	outline-offset: 2px;
 }
@@ -367,6 +420,7 @@ a.cmdLink:visited {
 
 div.fltHeader {
 	margin: 3px;
+	font-family: var(--font-family);
 	font-weight: bold;
 }
 
@@ -424,7 +478,8 @@ hr {
 .sidebarFilterContainer .cTimeInput input,
 .sidebarFilterContainer .cTimeInput .lFixedRight,
 .sidebarFilterContainer .ddwttDropBtn {
-	background: var(--background);
+	color: var(--highlight-fg, inherit);
+	background: var(--highlight-bg, var(--background));
 }
 
 .sidebarFilterContainer .cTextInput input {
@@ -548,6 +603,7 @@ div.fltList {
 
 .filterGroupTitle {
 	margin: 2px 2px 5px;
+	font-family: var(--font-family);
 	font-weight: bold;
 }
 
@@ -588,7 +644,8 @@ div.fltList {
 .defaultFilterContainer .cTimeInput input,
 .defaultFilterContainer .cTimeInput .lFixedRight,
 .defaultFilterContainer .ddwttDropBtn {
-	background: var(--background);
+	color: var(--highlight-fg, inherit);
+	background: var(--highlight-bg, var(--background));
 }
 
 .defaultFilterContainer .lFlexible > input {
@@ -630,7 +687,8 @@ div.fltList {
 }
 
 .checkboxMultiSelectNoEntries {
-    font-family: var(--font-family-bold);
+	font-family: var(--font-family);
+	font-weight: bold;
     font-size: var(--heading-compact-02-font-size);
     line-height: var(--heading-compact-02-line-height);
     letter-spacing: var(--heading-compact-02-letter-spacing);
@@ -1135,7 +1193,7 @@ td.rightList {
 	gap: var(--spacing-02);
 	justify-content: center;
 	align-items: center;
-	font-family: var(--font-family-regular);
+	font-family: var(--font-family);
 	font-size: .875rem;
 	font-weight: 400;
 	color: var(--button-secondary);
@@ -1243,14 +1301,15 @@ td.rightList {
 }
 
 .tl-mega-menu__option-label {
-	font-family: var(--font-family-bold);
+	font-family: var(--font-family);
+	font-weight: bold;
 	font-size: var(--heading-02-font-size);
 	line-height: var(--heading-02-line-height);
 	letter-spacing: var(--heading-02-letter-spacing);
 }
 
 .tl-mega-menu__option-tooltip {
-	font-family: var(--font-family-regular);
+	font-family: var(--font-family);
     font-size: .875rem;
     font-weight: 400;
 }
@@ -1279,7 +1338,7 @@ td.rightList {
 
 .tl-mega-menu__option-label--immutable {
 	color: var(--text-primary);
-	font-family: var(--font-family-regular);
+	font-family: var(--font-family);
     font-size: .875rem;
     font-weight: 400;
 }
@@ -1321,6 +1380,12 @@ div.mboxInput {
 	padding-left: 10px;
 }
 
+.mboxContent .tl-error-message-title {
+	display: flex;
+	align-items: center;
+	gap: var(--spacing-02);
+}
+
 /*
 ****										****
 ****	simpleajax network error box (sx)	****
@@ -1341,7 +1406,8 @@ div.sxError {
 
 div.sxMessage,
 div.sxFailure {
-	font-family: var(--font-family-bold);
+	font-family: var(--font-family);
+	font-weight: bold;
 	font-size: var(--heading-04-font-size);
 	line-height: var(--heading-04-line-height);
 	letter-spacing: var(--heading-04-letter-spacing);
@@ -1349,7 +1415,8 @@ div.sxFailure {
 }
 
 div.sxButtons {
-	font-family: var(--font-family-bold);
+	font-family: var(--font-family);
+	font-weight: bold;
 	font-size: var(--heading-compact-02-font-size);
 	line-height: var(--heading-compact-02-line-height);
 	letter-spacing: var(--heading-compact-02-letter-spacing);
@@ -1423,7 +1490,7 @@ div.lcHidden {
 	filter: drop-shadow(var(--shadow-menu));
 	z-index: 9999999999999999;
 	--ttPadding: var(--spacing-02);
-	font-weight: normal;
+	font-weight: 400;
 	cursor: default;
 	display: flex;
 	flex-direction: column;
@@ -1526,6 +1593,7 @@ div.lcHidden {
 	max-width: 100%;
 	overflow-y: auto;
 	overflow-x: hidden;
+	z-index: 100000;
 }
 
 .tl-info-service-item__hide-info-service_animation {
@@ -1535,9 +1603,9 @@ div.lcHidden {
 
 .tl-info-service-item {
 	position: relative;
-	margin: var(--spacing-02) var(--spacing-01) 0 0;
+	margin: var(--spacing-02) var(--spacing-01);
 	padding: 0 var(--spacing-03) var(--spacing-02) var(--spacing-03);
-	border-radius: 10px;
+	border-radius: .25rem;
 	box-shadow: var(--shadow-menu);
 	overflow-y: hidden;
 	overflow-x: auto;
@@ -1602,7 +1670,8 @@ div.lcHidden {
 }
 
 .tl-info-service-item__header-type-message {
-	font-family: var(--font-family-bold);
+	font-family: var(--font-family);
+	font-weight: bold;
 	font-size: var(--heading-compact-02-font-size);
 	line-height: var(--heading-compact-02-line-height);
 	letter-spacing: var(--heading-compact-02-letter-spacing);
@@ -1676,6 +1745,11 @@ p.tl-info-service-item__details-message-no-bottom {
 	animation-duration: 0.2s;
 }
 
+.tl-info-service-item__hide-info_animation {
+	animation-name: tl-info-service-item__hide-info_animation;
+	animation-duration: 0.2s;
+}
+
 @keyframes tl-info-service-item__show-info_animation {
     0% {opacity: 0;}
     100% {opacity: 0.9; margin-top: 3px;}
@@ -1725,26 +1799,6 @@ span.ltcCounting input {
     to {border-color: rgba(247, 223, 68, 1);}
 }
 
-@keyframes showInfoServiceItemDetailMessage {
-    0% {height: 0;}
-    100% {height: auto;}
-}
-
-@keyframes hideInfoServiceItemDetailMessage {
-    0% {height: auto;}
-    100% {height: 0;}
-}
-
-@keyframes rotatedInfoServiceItemDetailExpandButton {
-    from {transform: rotateZ(0deg);}
-    to {transform: rotateZ(90deg);}
-}
-
-@keyframes regularInfoServiceItemDetailExpandButton {
-    from {transform: rotateZ(90deg);}
-    to {transform: rotateZ(0deg);}
-}
-
 /*
 ****					****
 ****	Tiles Styles	****
@@ -1762,7 +1816,8 @@ span.ltcCounting input {
 	top: 40%;
 	transform: translate(-50%);
 	text-align: center;
-	font-family: var(--font-family-bold);
+	font-family: var(--font-family);
+	font-weight: bold;
 	font-size: var(--heading-03-font-size);
 	line-height: var(--heading-03-line-height);
 	letter-spacing: var(--heading-03-letter-spacing);
@@ -1892,7 +1947,8 @@ h5.card-title {
 
 h5.card-title a {
 	color: var(--text-primary);
-	font-family: var(--font-family-bold);
+	font-family: var(--font-family);
+	font-weight: bold;
 	font-size: var(--heading-03-font-size);
 	line-height: var(--heading-03-line-height);
 	letter-spacing: var(--heading-03-letter-spacing);
@@ -1911,7 +1967,7 @@ h5.card-title a:focus {
 .card-text {
 	order: 3;
 	color: var(--text-primary);
-	font-family: var(--font-family-regular);
+	font-family: var(--font-family);
 	font-size: var(--body-01-font-size);
 	line-height: var(--body-01-line-height);
 	letter-spacing: var(--body-01-letter-spacing);
@@ -1946,9 +2002,10 @@ h5.card-title a:focus {
 	min-width: 24px;
     border-radius: 50%;
     color: var(--text-on-color);
-    font-weight: 600;
+    font-weight: bold;
     border: 4px solid var(--background);
-    font-family: var(--font-family-bold);
+	font-family: var(--font-family);
+	font-weight: bold;
     font-size: var(--body-01-font-size);
     line-height: var(--body-01-line-height);
     letter-spacing: var(--body-01-letter-spacing);
@@ -2233,15 +2290,21 @@ h5.card-title a:focus {
 	align-items: center;
 }
 
-.treeNodeIcon:not(img),
+.treeNodeIcon > i {
+    color: var(--highlight, var(--icon-secondary));
+}
+
+.treeNode.treeSelected .treeNodeIcon > i,
+.treeNode:hover .treeNodeIcon > i {
+	color: var(--highlight, var(--icon-primary));
+}
+
 .treeNode .fToggle,
 .fToggle.tcrToggle {
     color: var(--icon-secondary);
 }
 
 .treeNode.treeSelected .fToggle.tcrToggle,
-.tcrNode .treeNode.treeSelected .treeNodeIcon:not(img),
-.tcrNode .treeNode:hover .treeNodeIcon:not(img),
 .tcrNode .treeNode:hover .treeNode .fToggle,
 .tcrNode .treeNode:hover .fToggle.tcrToggle {
 	color: var(--icon-primary);
@@ -2336,7 +2399,8 @@ div.treeNode.treeSelected.dndInsertInto {
 }
 
 .cCollapsibleTitle {
-	font-family: var(--font-family-bold);
+	font-family: var(--font-family);
+	font-weight: bold;
     font-size: var(--heading-compact-02-font-size);
     line-height: var(--heading-compact-02-line-height);
     letter-spacing: var(--heading-compact-02-letter-spacing);
@@ -2350,6 +2414,10 @@ div.treeNode.treeSelected.dndInsertInto {
     display: inline-flex;
     align-items: center;
     gap: var(--spacing-02);
+}
+
+.tl-block-control .cButton {
+    padding-left: var(--spacing-02);
 }
 
 .cCollapsibleToolbar .cButton,
@@ -2483,6 +2551,68 @@ div.DNDmouseMarker div.dndSelection {
     padding: 2px;
 }
 
+
+/*
+ * =======================================
+ * =======  Styles for Progress   ========
+ * =======================================
+ */
+progress {
+	width: 100%;
+	height: 1rem;
+	-webkit-appearance: none;
+	appearance: none;
+	box-sizing: border-box;
+}
+
+progress::-webkit-progress-bar {
+	background-color: var(--background);
+	border: 1px solid var(--border-interactive);
+	border-radius: var(--corner-radius);
+}
+
+progress::-webkit-progress-value {
+	background-color: var(--background-info);
+}
+
+progress[data-complete="true"]::-webkit-progress-value {
+	background-color: var(--background-success);
+}
+
+progress[data-complete="true"]::-webkit-progress-bar {
+	border: 1px solid var(--background-success);
+}
+
+progress::-moz-progress-bar {
+	background-color: var(--background-info);
+}
+
+progress[data-complete="true"]::-moz-progress-bar {
+	background-color: var(--background-success);
+}
+
+/*
+ * =======================================
+ * ======  Styles for logMessages  =======
+ * =======================================
+ */
+.logMessage.INFO {
+	color: var(--text-info);
+}
+
+.logMessage.WARN {
+	color: var(--text-warning--lighter);
+}
+
+.logMessage.DEBUG {
+	color: var(--text-debug);
+}
+
+.logMessage.ERROR,
+.logMessage.FATAL {
+	color: var(--text-danger);
+}
+
 /* ============================================================== */
 /* ====== Sync scrolling images (ssi), see ImageControl     ===== */
 /* ============================================================== */
@@ -2603,7 +2733,8 @@ div.ssiContentArea {
 	height: 2rem; /* 32px height */
 	padding: 0 var(--spacing-03);
 	border-radius: var(--corner-radius);
-	font-family: var(--font-family-bold);
+	font-family: var(--font-family);
+	font-weight: bold;
 	font-size: var(--heading-compact-02-font-size);
 	line-height: var(--heading-compact-02-line-height);
 	letter-spacing: var(--heading-compact-02-letter-spacing);
@@ -2636,3 +2767,175 @@ div.ssiContentArea {
 	margin-left: var(--spacing-01);
 }
 
+.tl-danger {
+	--highlight: var(--text-danger);
+	--highlight-fg: var(--text-danger--on-color);
+	--highlight-bg: var(--background-danger);
+	--highlight-bg--hover: var(--background-danger--hover);
+	--highlight-bg--selected: var(--background-danger--selected);
+	--highlight-bg--selected--hover: var(--background-danger--selected--hover);
+	--highlight-weight: bolder;
+}
+
+.tl-danger.tl-lighter {
+	--highlight: var(--text-danger--lighter);
+	--highlight-fg: var(--text-danger--on-color--lighter);
+	--highlight-bg: var(--background-danger--lighter);
+	--highlight-bg--hover: var(--background-danger--hover--lighter);
+	--highlight-bg--selected: var(--background-danger--selected--lighter);
+	--highlight-bg--selected--hover: var(--background-danger--selected--hover--lighter);
+	--highlight-weight: bolder;
+}
+
+.tl-warning {
+	--highlight: var(--text-warning);
+	--highlight-fg: var(--text-warning--on-color);
+	--highlight-bg: var(--background-warning);
+	--highlight-bg--hover: var(--background-warning--hover);
+	--highlight-bg--selected: var(--background-warning--selected);
+	--highlight-bg--selected--hover: var(--background-warning--selected--hover);
+	--highlight-weight: bolder;
+}
+
+.tl-warning.tl-lighter {
+	--highlight: var(--text-warning--lighter);
+	--highlight-fg: var(--text-warning--on-color--lighter);
+	--highlight-bg: var(--background-warning--lighter);
+	--highlight-bg--hover: var(--background-warning--hover--lighter);
+	--highlight-bg--selected: var(--background-warning--selected--lighter);
+	--highlight-bg--selected--hover: var(--background-warning--selected--hover--lighter);
+	--highlight-weight: bolder;
+}
+
+.tl-success {
+	--highlight: var(--text-success);
+	--highlight-fg: var(--text-success--on-color);
+	--highlight-bg: var(--background-success);
+	--highlight-bg--hover: var(--background-success--hover);
+	--highlight-bg--selected: var(--background-success--selected);
+	--highlight-bg--selected--hover: var(--background-success--selected--hover);
+	--highlight-weight: bolder;
+}
+
+.tl-success.tl-lighter {
+	--highlight: var(--text-success--lighter);
+	--highlight-fg: var(--text-success--on-color--lighter);
+	--highlight-bg: var(--background-success--lighter);
+	--highlight-bg--hover: var(--background-success--hover--lighter);
+	--highlight-bg--selected: var(--background-success--selected--lighter);
+	--highlight-bg--selected--hover: var(--background-success--selected--hover--lighter);
+	--highlight-weight: bolder;
+}
+
+.tl-info {
+	--highlight: var(--text-info);
+	--highlight-fg: var(--text-info--on-color);
+	--highlight-bg: var(--background-info);
+	--highlight-bg--hover: var(--background-info--hover);
+	--highlight-bg--selected: var(--background-info--selected);
+	--highlight-bg--selected--hover: var(--background-info--selected--hover);
+	--highlight-weight: bolder;
+}
+
+.tl-info.tl-lighter {
+	--highlight: var(--text-info--lighter);
+	--highlight-fg: var(--text-info--on-color--lighter);
+	--highlight-bg: var(--background-info--lighter);
+	--highlight-bg--hover: var(--background-info--hover--lighter);
+	--highlight-bg--selected: var(--background-info--selected--lighter);
+	--highlight-bg--selected--hover: var(--background-info--selected--hover--lighter);
+	--highlight-weight: bolder;
+}
+
+.tl-debug {
+	--highlight: var(--text-debug);
+	--highlight-fg: var(--text-debug--on-color);
+	--highlight-bg: var(--background-debug);
+	--highlight-bg--hover: var(--background-debug--hover);
+	--highlight-bg--selected: var(--background-debug--selected);
+	--highlight-bg--selected--hover: var(--background-debug--selected--hover);
+	--highlight-weight: normal;
+}
+
+.tl-debug.tl-lighter {
+	--highlight: var(--text-debug--lighter);
+	--highlight-fg: var(--text-debug--on-color--lighter);
+	--highlight-bg: var(--background-debug--lighter);
+	--highlight-bg--hover: var(--background-debug--hover--lighter);
+	--highlight-bg--selected: var(--background-debug--selected--lighter);
+	--highlight-bg--selected--hover: var(--background-debug--selected--hover--lighter);
+	--highlight-weight: normal;
+}
+
+.tl-accent-1 {
+	--highlight: var(--text-accent-1);
+	--highlight-fg: var(--text-accent-1--on-color);
+	--highlight-bg: var(--background-accent-1);
+	--highlight-bg--hover: var(--background-accent-1--hover);
+	--highlight-bg--selected: var(--background-accent-1--selected);
+	--highlight-bg--selected--hover: var(--background-accent-1--selected--hover);
+	--highlight-weight: bolder;
+}
+
+.tl-accent-1.tl-lighter {
+	--highlight: var(--text-accent-1--lighter);
+	--highlight-fg: var(--text-accent-1--on-color--lighter);
+	--highlight-bg: var(--background-accent-1--lighter);
+	--highlight-bg--hover: var(--background-accent-1--hover--lighter);
+	--highlight-bg--selected: var(--background-accent-1--selected--lighter);
+	--highlight-bg--selected--hover: var(--background-accent-1--selected--hover--lighter);
+	--highlight-weight: bolder;
+}
+
+.tl-accent-2 {
+	--highlight: var(--text-accent-2);
+	--highlight-fg: var(--text-accent-2--on-color);
+	--highlight-bg: var(--background-accent-2);
+	--highlight-bg--hover: var(--background-accent-2--hover);
+	--highlight-bg--selected: var(--background-accent-2--selected);
+	--highlight-bg--selected--hover: var(--background-accent-2--selected--hover);
+	--highlight-weight: bolder;
+}
+
+.tl-accent-2.tl-lighter {
+	--highlight: var(--text-accent-2--lighter);
+	--highlight-fg: var(--text-accent-2--on-color--lighter);
+	--highlight-bg: var(--background-accent-2--lighter);
+	--highlight-bg--hover: var(--background-accent-2--hover--lighter);
+	--highlight-bg--selected: var(--background-accent-2--selected--lighter);
+	--highlight-bg--selected--hover: var(--background-accent-2--selected--hover--lighter);
+	--highlight-weight: bolder;
+}
+
+.tl-accent-3 {
+	--highlight: var(--text-accent-3);
+	--highlight-fg: var(--text-accent-3--on-color);
+	--highlight-bg: var(--background-accent-3);
+	--highlight-bg--hover: var(--background-accent-3--hover);
+	--highlight-bg--selected: var(--background-accent-3--selected);
+	--highlight-bg--selected--hover: var(--background-accent-3--selected--hover);
+	--highlight-weight: bolder;
+}
+
+.tl-accent-3.tl-lighter {
+	--highlight: var(--text-accent-3--lighter);
+	--highlight-fg: var(--text-accent-3--on-color--lighter);
+	--highlight-bg: var(--background-accent-3--lighter);
+	--highlight-bg--hover: var(--background-accent-3--hover--lighter);
+	--highlight-bg--selected: var(--background-accent-3--selected--lighter);
+	--highlight-bg--selected--hover: var(--background-accent-3--selected--hover--lighter);
+	--highlight-weight: bolder;
+}
+
+/* If the accent style is directly set on an icon, set all text colors to the view-mode foreground */
+i.tl-danger,
+i.tl-warning,
+i.tl-success,
+i.tl-info,
+i.tl-debug,
+i.tl-accent-1,
+i.tl-accent-3,
+i.tl-accent-2 {
+	--highlight-fg: var(--highlight);
+	color: var(--highlight, inherit);
+}

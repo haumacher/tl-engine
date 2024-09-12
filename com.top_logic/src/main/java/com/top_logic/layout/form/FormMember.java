@@ -24,6 +24,7 @@ import com.top_logic.layout.form.model.VisibilityModel;
 import com.top_logic.layout.form.template.ControlProvider;
 import com.top_logic.layout.scripting.recorder.ref.NamedModel;
 import com.top_logic.layout.scripting.recorder.ref.field.BusinessObjectFieldRef;
+import com.top_logic.util.css.CssUtil;
 
 
 /**
@@ -84,6 +85,26 @@ public interface FormMember extends FormContextProxy, Focusable, VisibilityModel
 	static final Property<Object> STABLE_ID_SPECIAL_CASE_CONTEXT_PROPERTY =
 		TypedAnnotatable.property(Object.class, "context");
 
+	/**
+	 * Type of the <code>active</code> property.
+	 * 
+	 * The value transmitted to the client in response to a change of this property is a
+	 * {@link com.top_logic.base.services.simpleajax.XMLValueConstants#BOOLEAN_ELEMENT}.
+	 * 
+	 * @see #isActive()
+	 * @see ActivePropertyListener
+	 */
+	EventType<ActivePropertyListener, FormMember, Boolean> ACTIVE_PROPERTY =
+			new EventType<>("immutable") {
+		
+		@Override
+		public Bubble dispatch(ActivePropertyListener listener, FormMember sender, Boolean oldValue,
+				Boolean newValue) {
+			return listener.handleActiveChanged(sender, oldValue, newValue);
+		}
+		
+	};
+	
 	/**
 	 * Type of the <code>immutable</code> property.
 	 * 
@@ -229,6 +250,7 @@ public interface FormMember extends FormContextProxy, Focusable, VisibilityModel
 		.add(TOOLTIP_PROPERTY)
 		.add(LABEL_PROPERTY)
 		.add(CLASS_PROPERTY)
+		.add(ACTIVE_PROPERTY)
 		.add(DISABLED_PROPERTY)
 		.add(IMMUTABLE_PROPERTY)
 		.add(ADDED_TO_PARENT)
@@ -408,86 +430,45 @@ public interface FormMember extends FormContextProxy, Focusable, VisibilityModel
 	/**
 	 * Adds a single CSS class to the {@link #getCssClasses()} of this {@link FormMember}.
 	 *
-	 * @param cssClass
+	 * @param newClasses
 	 *        The new CSS class to add (must not contain spaces).
 	 * @return Whether the given CSS class was newly added (was not already set).
 	 */
-	default boolean addCssClass(String cssClass) {
-		if (StringServices.isEmpty(cssClass)) {
+	default boolean addCssClass(String newClasses) {
+		if (StringServices.isEmpty(newClasses)) {
 			return false;
 		}
 
-		String cssClasses = getCssClasses();
-		if (StringServices.isEmpty(cssClasses)) {
-			setCssClasses(cssClass);
-		} else {
-			int lastIndex = 0;
-			boolean testAgain = true;
-			while (testAgain) {
-				int index = cssClasses.indexOf(' ', lastIndex);
-				if (index < 0) {
-					index = cssClasses.length();
-					testAgain = false;
-				}
-				if (cssClasses.substring(lastIndex, index).equals(cssClass)) {
-					return false;
-				}
-				lastIndex = index + 1;
-			}
-
-			setCssClasses(cssClasses + " " + cssClass);
+		String before = getCssClasses();
+		String after = CssUtil.joinCssClassesUnique(before, newClasses);
+		if (StringServices.equals(before, after)) {
+			return false;
 		}
+
+		setCssClasses(after);
 		return true;
 	}
 
 	/**
 	 * Removes a single CSS class from the {@link #getCssClasses()} of this {@link FormMember}.
 	 *
-	 * @param cssClass
+	 * @param removedClass
 	 *        The single CSS class to remove (must not contain spaces).
 	 * @return Whether the given CSS class was set on this member before (was actually removed).
 	 */
-	default boolean removeCssClass(String cssClass) {
-		if (StringServices.isEmpty(cssClass)) {
+	default boolean removeCssClass(String removedClass) {
+		if (StringServices.isEmpty(removedClass)) {
 			return false;
 		}
 
-		String cssClasses = getCssClasses();
-		if (StringServices.isEmpty(cssClasses)) {
-			return false;
-		} else {
-			int startIndex = 0;
-			boolean testAgain = true;
-			while (testAgain) {
-				int sepPos = cssClasses.indexOf(' ', startIndex);
-				int stopIndex;
-				if (sepPos < 0) {
-					stopIndex = cssClasses.length();
-					testAgain = false;
-				} else {
-					stopIndex = sepPos;
-				}
-				if (cssClasses.substring(startIndex, stopIndex).equals(cssClass)) {
-					if (startIndex == 0) {
-						if (stopIndex == cssClasses.length()) {
-							setCssClasses(null);
-						} else {
-							setCssClasses(cssClasses.substring(stopIndex + 1, cssClasses.length()));
-						}
-					} else {
-						if (stopIndex == cssClasses.length()) {
-							setCssClasses(cssClasses.substring(0, startIndex - 1));
-						} else {
-							setCssClasses(cssClasses.substring(0, startIndex)
-								+ cssClasses.substring(stopIndex + 1, cssClasses.length()));
-						}
-					}
-					return true;
-				}
-				startIndex = sepPos + 1;
-			}
+		String before = getCssClasses();
+		String after = CssUtil.removeCssClasses(before, removedClass);
+		if (StringServices.equals(before, after)) {
 			return false;
 		}
+
+		setCssClasses(after);
+		return true;
 	}
     
     /**

@@ -270,6 +270,7 @@
 		            <renderer kind="CODE" type="com.top_logic.base.services.simpleajax.HTMLFragment" implementation="com.top_logic.layout.basic.FragmentRenderer" />
 		            <renderer kind="CODE" type="com.top_logic.basic.io.binary.BinaryDataSource" implementation="com.top_logic.knowledge.wrap.DocumentDownloadRenderer" />
 		            <renderer kind="CODE" type="com.top_logic.html.template.config.HTMLTemplate" implementation="com.top_logic.html.template.config.ConfiguredTemplateRenderer" />
+		            <renderer kind="CODE" type="java.awt.Color" implementation="com.top_logic.layout.form.control.ColorRenderer" />
 				</renderers>
 				
 				<mappings>
@@ -673,7 +674,16 @@
 							the variable "com.top_logic.layout.table.model.Icons.SELECTION_COLUMN_WIDTH", is only set when a new table configuration based on this default 
 							table is created. 
 						-->
-						<column name="_select" cssClass="tblCenter" sortable="false" fullTextProvider="" columnLabelKey="tl.table._select" filterProvider="" classifier="suppressExport" showHeader="false">
+						<column name="_select"
+							cssClass="tblCenter"
+							sortable="false"
+							selectable="false"
+							fullTextProvider=""
+							columnLabelKey="tl.table._select"
+							filterProvider=""
+							classifier="suppressExport"
+							showHeader="false"
+						>
 							<cellRenderer class="com.top_logic.layout.table.control.TableSelectionColumnRenderer"/>
 						</column>
 					</columns>
@@ -1190,7 +1200,7 @@
 					<handler class="com.top_logic.tool.boundsec.commandhandlers.SetComponentModelCommand"/>
 					<handler id="cancelCreate" class="com.top_logic.layout.form.component.AbstractCreateComponent$CancelHandler"
 						clique="cancel"/>
-					<handler id="setHomepage" class="com.top_logic.tool.boundsec.commandhandlers.CompoundSetHomepageHandler"
+					<handler id="setHomepage" class="com.top_logic.tool.boundsec.commandhandlers.SetHomepageHandler"
 						image="theme:HEAD_HOME"
 						resourceKey="menu.Home"
 						confirm="true"
@@ -1718,6 +1728,7 @@
 					<scheme class="com.top_logic.layout.scripting.recorder.ref.value.form.FieldRawValueNaming" priority="resolve-only"/>
 					<scheme class="com.top_logic.layout.scripting.recorder.ref.value.form.FieldOptionsNaming" priority="resolve-only"/>
 					<scheme class="com.top_logic.layout.scripting.recorder.ref.value.form.FieldOptionLabelsNaming" priority="resolve-only"/>
+					<scheme class="com.top_logic.layout.scripting.recorder.ref.value.form.FieldPlaceholderNaming" priority="resolve-only"/>
 					<scheme class="com.top_logic.layout.scripting.recorder.ref.ObjectAspectNaming" priority="resolve-only"/>
 					<scheme class="com.top_logic.layout.scripting.recorder.ref.ConfigValueNaming" priority="resolve-only"/>
 					<scheme class="com.top_logic.layout.component.ComponentModelNamingScheme" priority="resolve-only"/>
@@ -1816,6 +1827,7 @@
 					<scheme class="com.top_logic.layout.scripting.recorder.ref.value.object.GlobalVariableNaming" priority="preferred" />
 					<scheme class="com.top_logic.gui.ThemeNaming"/>
 					<scheme class="com.top_logic.layout.scripting.recorder.ref.ResourceModelNaming"/>
+					<scheme class="com.top_logic.layout.scripting.recorder.ref.TransientTLObjectNaming"/>
 				</schemes>
 			</instance>
 		</config>

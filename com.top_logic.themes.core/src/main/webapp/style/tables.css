@@ -2,10 +2,6 @@
 /* Design of a regular, unmodified table, which get 
 /* created through inapp configurations 
 */
-code:not(table) {
-	font-family: var(--font-family-regular);
-}
-
 .tl-standard-table {
 	white-space: nowrap;
 	display: table;
@@ -27,17 +23,17 @@ table.treeBody {
 }
 
 table.treeBody .tl-table__row:not(.tblSelected):hover > td {
-    background: var(--background);
+    background: var(--highlight-bg--hover, var(--background));
 }
 
 .tl-standard-table th {
 	text-align: left;
 	color: var(--text-primary);
-    font-family: var(--font-family-bold);
+	font-family: var(--font-family);
+	font-weight: bold;
     font-size: var(--heading-compact-02-font-size);
     line-height: var(--heading-compact-02-line-height);
     letter-spacing: var(--heading-compact-02-letter-spacing);
-    font-weight: 600;
     background: var(--layer);
 }
 
@@ -105,7 +101,8 @@ a.tl-table__title:visited {
     gap: var(--spacing-02);
 	background: var(--layer-accent);
 	color: var(--text-primary);
-	font-family: var(--font-family-bold);
+	font-family: var(--font-family);
+	font-weight: bold;
     font-size: var(--heading-compact-02-font-size);
     line-height: var(--heading-compact-02-line-height);
     letter-spacing: var(--heading-compact-02-letter-spacing);
@@ -121,7 +118,8 @@ a.tl-table__title:visited {
 th.tblTitleRight {
 	background: var(--layer-accent);
 	color: var(--text-primary);
-	font-family: var(--font-family-bold);
+	font-family: var(--font-family);
+	font-weight: bold;
 	font-size: var(--heading-03-font-size);
 	line-height: var(--heading-03-line-height);
 	letter-spacing: var(--heading-03-letter-spacing);
@@ -192,7 +190,7 @@ th.tblCounterNoBorder {
 }
 
 .tl-table__footer-pager .ddwttDropBtn {
-	font-family: var(--font-family-regular);
+	font-family: var(--font-family);
     font-size: var(--body-01-font-size);
     line-height: var(--body-0-line-height);
     letter-spacing: var(--body-01-letter-spacing);
@@ -204,7 +202,8 @@ td.tl-table__cell {
 }
 
 .tl-table__cell {
-	color: var(--text-secondary);
+	color: var(--highlight-fg, var(--text-secondary));
+	background-color: var(--highlight-bg, inherit);
     white-space: nowrap;
 	padding: 0px;
 	border-color: var(--border-subtle);
@@ -214,13 +213,13 @@ td.tl-table__cell {
 }
 
 th.tl-table__cell {
-    color: var(--text-primary);
-	font-family: var(--font-family-bold);
+    color: var(--highlight-fg, var(--text-primary));
+	font-family: var(--font-family);
+	font-weight: bold;
 	font-size: var(--heading-compact-02-font-size);
 	line-height: var(--heading-compact-02-line-height);
 	letter-spacing: var(--heading-compact-02-letter-spacing);
-	font-weight: 600;
-    background: var(--layer);
+    background: var(--highlight-bg--selected, var(--layer));
     border-bottom-color: var(--border-subtle);
     border-bottom-style: solid;
     border-bottom-width: 1px;
@@ -244,8 +243,8 @@ td.tl-table__cell {
 }
 
 .tl-table__row.header .tl-table__cell:hover {
-	color: var(--text-primary);
-	background: var(--layer-hover);
+	color: var(--highlight-fg, var(--text-primary));
+	background: var(--highlight-bg--selected--hover, var(--layer-hover));
 }
 
 .tl-table__header-cell-content span.activeFilter:hover {
@@ -443,17 +442,6 @@ td.tblTDselect100 {
 	border-width:     0px;
 }
 
-/** A Numeric table entry */
-td.num {
-	font-family:    var(--MONOSPACE_FAMILY);
-	text-align:     right;
-    white-space:    nowrap;
-	padding:        2px;
-	border-color:   transparent;
-	color:          var(--text-primary);
-}
-
-
 a.tl-table__cell {
 	font-size:13px;
 	color:black;
@@ -632,7 +620,7 @@ td.fltButton {
 }
 
 .tl-table__header-cell-content .fltButton.tl-table__filter-sort-icons {
-	color: var(--icon-primary);
+	color: var(--highlight-fg, var(--icon-primary));
 	align-self: center;
 }
 
@@ -641,7 +629,7 @@ td.fltButton {
 }
 
 .tl-table__header-cell-content .fltButton:not(.activeFilter):not(.tl-table__filter-sort-icons):hover {
-	color: var(--icon-primary);
+	color: var(--highlight-fg, var(--icon-primary));
 }
 
 .tl-table__header-cell-content .fltButton.activeFilter {
@@ -801,7 +789,7 @@ tr.tblFilterNotValidated td,
 tr.tblFilterNotValidated td input,
 tr.tblFilterNotValidated td select,
 tr.tblFilterNotValidated td label {
-	font-weight: 600;
+	font-weight: bold;
 	color: var(--text-primary);
 }
 
@@ -948,16 +936,16 @@ table .cDecoratedCell > .lFlexible > :first-child:not(a) {
 }
 
 table td span.cDecoratedCell {
-	gap: var(--spacing-02);
+	gap: var(--spacing-01);
 }
 
-.cDecoratedCell .treeType {
-	color: var(--icon-secondary);
+.treeType > i {
+	color: var(--highlight-fg, var(--icon-secondary));
 }
 
-.tl-table__row:not(.tblSelected):hover .cDecoratedCell .treeType, 
-td.tl-table__cell--selected .cDecoratedCell .treeType {
-	color: var(--icon-primary);
+.tl-table__row:not(.tblSelected):hover .treeType > i, 
+td.tl-table__cell--selected .treeType > i {
+	color: var(--highlight-fg, var(--icon-primary));
 }
 
 table.i18nStringTable td span.cDecoratedCell .lFlexible {
@@ -1061,10 +1049,20 @@ table td .cDatetime .lFlexible {
 	width: fit-content !important;
 }
 
+/* 
+Padding is spacing-01 instead of 03 for tables 
+because of the datetimeinput field.
+ */
+table td .cTextInput input,
+table td .cIntegerInput.num input, 
+table td .cExpandableTextInput input, 
+table td .cBlockTextInput input, 
+table td .cPopupSelect input,
 table td .cDatetime .cDateInput input,
-table td .cDatetime .cTimeInput input {
-	padding-right: 0;
-    padding-left: 0;
+table td .cDatetime .cTimeInput input,
+table td .cDateInput input,
+table td .ddwttDropBtn {
+	padding: 0 var(--spacing-01);
 }
 
 table.tl-table td .cDateTime .lFixedRight .cDateInput .lFlexible {
@@ -1308,12 +1306,26 @@ div.dirtyHandlingDialog .changes {
 }
 
 .px-1 {
-	padding-right: var(--spacing-02) !important;
-	padding-left: var(--spacing-02) !important;
+	padding: 0 var(--spacing-01) !important;
     display: inline-flex;
     align-items: center;
     box-sizing: border-box;
     vertical-align: middle;
+}
+
+.px-1:has(input) {
+    width: 100%;
+	padding: 0 !important;
+}
+
+.lFixedLeft {
+	padding-right: var(--spacing-01);
+}
+
+/* Needs to be changed when px-1 padding changes. Otherwise the table row jumps when selection changed. */
+.px-1:has(input) .lFixedLeft {
+	padding-left: var(--spacing-01);
+	padding-right: 0;
 }
 
 th .px-1 {
@@ -1393,7 +1405,7 @@ th:last-child .px-1 {
 	justify-content: center;
 	background: var(--layer-accent);
 	color: var(--text-primary);
-	font-family: var(--font-family-regular);
+	font-family: var(--font-family);
 	font-size: var(--body-01-font-size);
 	line-height: var(--body-01-line-height);
 	letter-spacing: var(--body-01-letter-spacing);
@@ -1424,7 +1436,8 @@ th:last-child .tl-table__cell-resizer {
 	background-clip: padding-box !important;
 	position: relative;
 	box-sizing: border-box;
-	background-color: var(--background);
+	color: var(--highlight-fg, inherit);
+	background-color: var(--highlight-bg, var(--background));
 }
 
 .tl-table__cell:not(:last-child),
@@ -1449,7 +1462,8 @@ th:last-child .tl-table__cell-resizer {
 }
 
 .tblSelected .tl-table__cell {
-	background: inherit;
+	color: var(--highlight-fg, inherit);
+	background: var(--highlight-bg--selected, inherit);
 }
 
 .tl-table-overlay {
@@ -1591,7 +1605,8 @@ table.tl-table--fixed td.tl-table__cell--selected.treeTableTd {
 
 th.treeTableTh {
     color: var(--text-primary);
-    font-family: var(--font-family-bold);
+	font-family: var(--font-family);
+	font-weight: bold;
 	font-size: var(--heading-compact-02-font-size);
 	line-height: var(--heading-compact-02-line-height);
 	letter-spacing: var(--heading-compact-02-letter-spacing);
@@ -1634,29 +1649,30 @@ td.treeTableTd span {
 *****************************************************************************/
 td.tl-table__cell--selected {
     white-space:      nowrap;
-    color:            var(--text-primary);
-    background-color: var(--layer-selected);
+    color:            var(--highlight-fg, var(--text-primary));
+    background-color: var(--highlight-bg, var(--layer-selected));
     border-color:     var(--border-subtle);
 }
 
 .tblSelected.tl-table__row:hover {
-	background-color: var(--layer-selected-hover)
+	background-color: var(--layer-selected-hover);
+}
+
+.tblSelected.tl-table__row:hover .tl-table__cell {
+	background-color: var(--highlight-bg--selected--hover, var(--layer-selected-hover));
 }
 
 .tl-table__row:not(.tblSelected):hover > td {
-	background-color: var(--layer-hover);
-}
-
-.tl-table__row:not(.tblSelected):hover .px-1 {
-	color: var(--text-primary);
+	color: var(--highlight-fg, var(--text-primary));
+	background-color: var(--highlight-bg--hover, var(--layer-hover));
 }
 
 .tl-table__row:not(.tblSelected):hover .fToggle a {
-	color: var(--icon-primary);
+	color: var(--highlight-fg, var(--icon-primary));
 }
 
 .tl-table__cell--selectable .fToggle a {
-	color: var(--icon-secondary);
+	color: var(--highlight-fg, var(--icon-secondary));
 }
 
 .i18nStringTable.tl-table {
